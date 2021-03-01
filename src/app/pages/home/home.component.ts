@@ -39,6 +39,6 @@ export class HomeComponent implements OnInit {
             this.mockUser.firstname = data;
         }
 
-        this.store.collection('data').doc(this.mockUser.lastname).set({data: this.mockUser});
+        this.store.collection('data').doc(this.mockUser.lastname).set({data: this.mockUser, timestamp: Date.now()});
     }
 }
