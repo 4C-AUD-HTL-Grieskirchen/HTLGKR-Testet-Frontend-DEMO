@@ -120,6 +120,10 @@
               "devServerTarget": "HTLGKR-Testet-Frontend-DEMO:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
     }
