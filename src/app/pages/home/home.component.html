@@ -2,3 +2,7 @@
 
 <input #dataInput type="text">
 <button (click)="insertData(dataInput.value)" >Senden</button>
+
+<ul>
+    <li *ngFor="let entry of dataCollection">{{entry.data}}</li>
+</ul>
