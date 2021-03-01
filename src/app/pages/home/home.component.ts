@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {AngularFirestore} from '@angular/fire/firestore';
 
 @Component({
     selector: 'app-home',
@@ -7,15 +8,15 @@ import {Component, OnInit} from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-    constructor() {
+    constructor(private store: AngularFirestore) {
     }
 
     ngOnInit(): void {
     }
 
-    insertDate(data: string): void {
+    insertData(data: string): void {
 
+        this.store.collection('data').add({data});
 
     }
-
 }
