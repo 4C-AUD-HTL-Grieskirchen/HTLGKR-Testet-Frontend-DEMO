@@ -9,19 +9,23 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../environments/environment';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
+import { LoginComponent } from './pages/login/login.component';
+import {AngularFireAuthModule} from '@angular/fire/auth';
 
 @NgModule({
     declarations: [
         AppComponent,
         HomeComponent,
-        NavbarComponent
+        NavbarComponent,
+        LoginComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         ReactiveFormsModule,
         AngularFireModule.initializeApp(environment.firebase),
-        AngularFirestoreModule
+        AngularFirestoreModule,
+        AngularFireAuthModule
     ],
     providers: [],
     bootstrap: [AppComponent]
