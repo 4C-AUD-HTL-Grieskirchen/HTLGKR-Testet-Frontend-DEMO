@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
+import {User} from '../../User';
 
 @Component({
     selector: 'app-home',
@@ -8,6 +9,12 @@ import {AngularFirestore} from '@angular/fire/firestore';
 })
 export class HomeComponent implements OnInit {
 
+    mockUser: User = {
+        id: 1,
+        firstname: 'Michael',
+        lastname: 'Wiesinger',
+        age: 17
+    };
 
     dataCollection: any[];
 
@@ -26,8 +33,12 @@ export class HomeComponent implements OnInit {
 
     insertData(data: string): void {
 
-        this.store.collection('data').add({data});
+        this.store.collection('data').doc('gaming').set({data, timestamp: Date.now(), id: 1});
 
+        if (data !== '') {
+            this.mockUser.firstname = data;
+        }
 
+        this.store.collection('data').doc(this.mockUser.lastname).set({data: this.mockUser});
     }
 }
