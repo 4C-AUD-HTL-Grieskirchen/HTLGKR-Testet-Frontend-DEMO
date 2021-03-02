@@ -23,22 +23,20 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.store.collection('data').valueChanges().subscribe(value => {
-            this.dataCollection = value;
-
-            console.log(this.dataCollection);
+        this.store.firestore.collection('data').orderBy('timestamp').onSnapshot(snapshot => {
+            this.dataCollection = [];
+            snapshot.forEach(result => {
+                this.dataCollection.push(result.data());
+            });
         });
 
     }
 
     insertData(data: string): void {
 
-        this.store.collection('data').doc('gaming').set({data, timestamp: Date.now(), id: 1});
+        this.store.firestore.collection('data').add({data, timestamp: Date.now()});
 
-        if (data !== '') {
-            this.mockUser.firstname = data;
-        }
 
-        this.store.collection('data').doc(this.mockUser.lastname).set({data: this.mockUser, timestamp: Date.now()});
+        // this.store.collection('data').doc(this.mockUser.lastname).set({data: this.mockUser, timestamp: Date.now()});
     }
 }
