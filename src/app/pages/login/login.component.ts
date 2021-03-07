@@ -9,13 +9,20 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class LoginComponent implements OnInit {
 
+    uid = '';
+
     email = '';
     password = '';
     showSpinner = false;
 
-    constructor(private loginService: FirebaseAuthService, private snackbar: MatSnackBar) {}
+    constructor(private loginService: FirebaseAuthService, private auth: FirebaseAuthService, private snackbar: MatSnackBar) {}
 
     ngOnInit(): void {
+        this.auth.loggedIn();
+
+        this.auth.user.subscribe(value => {
+            this.uid = value?.uid ?? 'Not logged in';
+        });
     }
 
     login(): void {

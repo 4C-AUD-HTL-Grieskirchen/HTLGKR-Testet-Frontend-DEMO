@@ -4,27 +4,28 @@ import {AngularFireAuth} from '@angular/fire/auth';
 import firebase from 'firebase';
 import User = firebase.User;
 import UserCredential = firebase.auth.UserCredential;
+import Auth = firebase.auth.Auth;
+import {Observable} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class FirebaseAuthService {
 
-    user: User | undefined;
+    public readonly user: Observable<User | null>;
 
     constructor(public auth: AngularFireAuth, public router: Router) {
+        this.auth.setPersistence(Auth.Persistence.SESSION);
 
-        auth.authState.subscribe(user => {
-            if (user) {
-                this.user = user;
-                localStorage.setItem('user', JSON.stringify(user));
-            } else {
-                localStorage.removeItem('user');
-            }
-        });
+        this.user = auth.authState;
+    }
+
+    loggedIn(): boolean {
+        return this.user !== undefined;
     }
 
     async login(email: string, password: string): Promise<UserCredential> {
+
         const result = await this.auth.signInWithEmailAndPassword(email, password);
         console.log(result);
         return result;
