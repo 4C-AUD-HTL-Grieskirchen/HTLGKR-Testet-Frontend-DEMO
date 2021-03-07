@@ -1,8 +1,28 @@
-<p>home works!</p>
 
-<input #dataInput type="text">
-<button (click)="insertData(dataInput.value)" >Senden</button>
+<mat-card>
 
-<ul>
-    <li *ngFor="let entry of dataCollection">{{entry.data}}</li>
-</ul>
+    <mat-form-field color="primary">
+        <mat-label>Some text here</mat-label>
+        <input matInput type="text" [(ngModel)]="value">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="insertData()" >Senden</button>
+
+    <mat-table [dataSource]="dataCollection" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="data">
+            <mat-header-cell *matHeaderCellDef> Data </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.data}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="timestamp">
+            <mat-header-cell *matHeaderCellDef> Timestamp </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.timestamp}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+    </mat-table>
+</mat-card>
+

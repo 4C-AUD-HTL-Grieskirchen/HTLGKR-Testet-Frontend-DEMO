@@ -9,17 +9,14 @@ import {User} from '../../User';
 })
 export class HomeComponent implements OnInit {
 
-    mockUser: User = {
-        id: 1,
-        firstname: 'Michael',
-        lastname: 'Wiesinger',
-        age: 17
-    };
+    value: string;
+    displayedColumns: string[] = ['data', 'timestamp'];
 
     dataCollection: any[];
 
     constructor(private store: AngularFirestore) {
         this.dataCollection = [];
+        this.value = '';
     }
 
     ngOnInit(): void {
@@ -32,10 +29,12 @@ export class HomeComponent implements OnInit {
 
     }
 
-    insertData(data: string): void {
+    insertData(): void {
 
-        this.store.firestore.collection('data').add({data, timestamp: Date.now()});
+        if(this.value.length === 0) return;
 
+        this.store.firestore.collection('data').add({data: this.value, timestamp: Date.now()});
+        this.value = '';
 
         // this.store.collection('data').doc(this.mockUser.lastname).set({data: this.mockUser, timestamp: Date.now()});
     }
