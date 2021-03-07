@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {User} from '../../User';
+import {FirebaseAuthService} from '../../services/firebase-auth.service';
 
 @Component({
     selector: 'app-home',
@@ -10,11 +11,13 @@ import {User} from '../../User';
 export class HomeComponent implements OnInit {
 
     value: string;
-    displayedColumns: string[] = ['data', 'timestamp'];
+    displayedColumns: string[] = ['data', 'timestamp', 'author'];
+
+    userMail = 'undefined';
 
     dataCollection: any[];
 
-    constructor(private store: AngularFirestore) {
+    constructor(private store: AngularFirestore, private auth: FirebaseAuthService) {
         this.dataCollection = [];
         this.value = '';
     }
@@ -27,13 +30,19 @@ export class HomeComponent implements OnInit {
             });
         });
 
+        this.auth.user.subscribe(value1 => {
+            this.userMail = value1?.email ?? 'unknown';
+        });
+
+
+
     }
 
     insertData(): void {
 
-        if(this.value.length === 0) return;
+        if (this.value.length === 0) { return; }
 
-        this.store.firestore.collection('data').add({data: this.value, timestamp: Date.now()});
+        this.store.firestore.collection('data').add({data: this.value, timestamp: Date.now(), author:  this.userMail});
         this.value = '';
 
         // this.store.collection('data').doc(this.mockUser.lastname).set({data: this.mockUser, timestamp: Date.now()});
