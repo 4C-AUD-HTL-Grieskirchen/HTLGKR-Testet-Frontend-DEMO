@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FirebaseAuthService} from '../../services/firebase-auth.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-login',
@@ -8,16 +9,26 @@ import {FirebaseAuthService} from '../../services/firebase-auth.service';
 })
 export class LoginComponent implements OnInit {
 
-    constructor(private loginService: FirebaseAuthService) {}
+    email = '';
+    password = '';
+    showSpinner = false;
+
+    constructor(private loginService: FirebaseAuthService, private snackbar: MatSnackBar) {}
 
     ngOnInit(): void {
     }
 
-    login(email: string, pw: string): void {
-        this.loginService.login(email, pw).then(value => {
-            alert(value.user?.uid);
+    login(): void {
+
+
+
+        this.showSpinner = true;
+        this.loginService.login(this.email, this.password).then(value => {
+            this.snackbar.open('User UID: ' + value.user?.uid);
+            this.showSpinner = false;
         }).catch(reason => {
-            alert(reason);
+            this.snackbar.open(reason);
+            this.showSpinner = false;
         });
     }
 

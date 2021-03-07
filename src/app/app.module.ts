@@ -18,6 +18,10 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTableModule} from '@angular/material/table';
 import {MatCardModule} from '@angular/material/card';
+import {MatIconModule} from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
     declarations: [
@@ -40,6 +44,10 @@ import {MatCardModule} from '@angular/material/card';
         MatFormFieldModule,
         MatTableModule,
         MatCardModule,
+        MatIconModule,
+        MatMenuModule,
+        MatSnackBarModule,
+        MatProgressSpinnerModule,
         FormsModule
     ],
     providers: [],
